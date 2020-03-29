@@ -6,7 +6,9 @@ Windvane
    Last modification  : 
   
   Version            : 1.0
-  History            : 1.0 - First version                       
+  History            : 1.0 - First version
+                       1.1 - Replaced AMS117 LDO regulator to HT7333 LDO (1V dropout of AMS117 was too much when powered ESP32 via 5v pin with 3.7v lithium battery) 
+                             => the 3.3v pin displayed 2.8v ... when battery was 3.9v :( with HT7333 it's much better...but wareful it can deliver only 250mA max)                       
                        
 References :   
 
@@ -14,7 +16,7 @@ ESP32 Dev kit : https://randomnerdtutorials.com/getting-started-with-esp32/
 
 Arduino Board used to program : ESP32 Dev Module
 
-Deep sleep mode consumption (ESP32 Devkit) : 10mA (due to voltage divider)
+Deep sleep mode consumption (ESP32 Devkit) : 10mA (due to voltage divider) => 8mA with HT7333
 Wake up mode (ESP32 Devkit)                : between 70 and 130mA
 
 For deep sleep to work D0 must be connected to RESET 
@@ -41,7 +43,7 @@ WiFiClient espClient;
 PubSubClient client(espClient);
 
 #define DEBUG 0
-#define FIRMWARE_VERSION "1.0"
+#define FIRMWARE_VERSION "1.1"
 
 int counter = 0;
 int samples = 4;
@@ -60,6 +62,7 @@ String directions[] = { "South", "South-South-East", "South-East","East-South-Ea
 
 const int WINDIRSENSOR_PIN = 34;
 const int BATTERYSENSOR_PIN = 35;
+const int LED_PIN = 2;
 
 DynamicJsonDocument doc(500);
 JsonObject winddir = doc.to<JsonObject>();
@@ -93,6 +96,10 @@ void setup() {
   // put your setup code here, to run once:
   pinMode(WINDIRSENSOR_PIN, INPUT);
   pinMode(BATTERYSENSOR_PIN, INPUT);
+  pinMode(LED_PIN, OUTPUT);
+
+  //Turn off LED (save some mA)
+  digitalWrite(LED_PIN, HIGH);
   
    // Initialize Serial Port
   if (DEBUG) {
@@ -106,7 +113,7 @@ void setup() {
 
   uint32_t brown_reg_temp = READ_PERI_REG(RTC_CNTL_BROWN_OUT_REG); //save WatchDog register
   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0); //disable brownout detector
-  
+
   debug_message("Setup completed, starting...",true); 
 }
 
@@ -281,67 +288,67 @@ float getDegree(String direction) {
 
 String getWindDirection(float voltage) {
 
-  if (voltage >= 390 and voltage <= 566) {
+  if (voltage >= 490 and voltage <= 560) {
     return directions[0]; //South
   }
 
-  if (voltage >= 310 and voltage <= 389) {
+  if (voltage >= 420 and voltage <= 480) {
     return directions[1] ; //South-South-East    
   }
 
-  if (voltage >= 2000 and voltage <= 2100) {
+  if (voltage >= 2300 and voltage <= 2400) {
     return directions[2] ; //"South-East"    
   }
   
-  if (voltage >= 1780 and voltage <= 1980) {
+  if (voltage >= 2100 and voltage <= 2180) {
     return directions[3];  //"East-South-East";    
   }
 
-  if (voltage >= 3000 and voltage <= 3200) {
+  if (voltage >= 3440 and voltage <= 3540) {
     return directions[4]; //"East";    
   }
 
-  if (voltage >= 2740 and voltage <= 2940) {
+  if (voltage >= 3110 and voltage <= 3250) {
     return directions[5]; //"East-North-East";    
   }
 
-  if (voltage >= 3427 and voltage <= 3627) {
+  if (voltage >= 3830 and voltage <= 3930) {
     return directions[6]; //"North-East";
   }
 
-  if (voltage >= 3200 and voltage <= 3400) {
+  if (voltage >= 3590 and voltage <= 3690) {
     return directions[7]; //"North-North-East";
   }
 
-  if (voltage >= 3630 and voltage <= 3830) {
+  if (voltage >= 4040 and voltage <= 4096) {
     return directions[8]; //"North";
   }
 
-  if (voltage >= 2330 and voltage <= 2480) {
+  if (voltage >= 2700 and voltage <= 2800) {
     return directions[9]; //"North-North-West";
   }
 
-  if (voltage >= 2481 and voltage <= 2624) {
+  if (voltage >= 2810 and voltage <= 2910) {
     return directions[10]; //"North-West";
   }
 
-  if (voltage >= 1635 and voltage <= 1779) {
+  if (voltage >= 1950 and voltage <= 2050) {
     return directions[11]; //"West-North-West";
   }
 
-  if (voltage >= 2101 and voltage <= 2300) {
+  if (voltage >= 2400 and voltage <= 2500) {
     return directions[12]; //"West";
   }
 
-  if (voltage >= 660 and voltage <= 868) {
+  if (voltage >= 870 and voltage <= 969) {
     return directions[13]; //"West-South-West";
   }
 
-  if (voltage >= 822 and voltage <= 1022) {
+  if (voltage >= 1020 and voltage <= 1130) {
     return directions[14]; //"South-West";
   }
   
-  if (voltage >= 142 and voltage <= 342) {
+  if (voltage >= 280 and voltage <= 384) {
     return directions[15]; //"South-South-West";
   }
 
@@ -350,7 +357,7 @@ String getWindDirection(float voltage) {
 
 float ReadVoltage() {
 
-  //AnalogRead = 704 pour 4.05v
+  //AnalogRead = 692 pour 3.9v
 
   //R1 = 33kOhm
   //R2 = 7.5kOhm
@@ -362,7 +369,7 @@ float ReadVoltage() {
     
   debug_message("Analog Reading : " + String(sensorValue,2), true);
 
-  return (sensorValue * 4.05) / 704;
+  return (sensorValue * 3.9) / 692;
 
 }
 
