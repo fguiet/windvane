@@ -46,7 +46,7 @@ PubSubClient client(espClient);
 #define FIRMWARE_VERSION "1.1"
 
 int counter = 0;
-int samples = 4;
+int samples = 9;
 unsigned long last_millis = 0;
 const int get_direction_frequency = 5000; //10s = 10000
 char message_buff[200];
