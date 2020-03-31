@@ -5,6 +5,16 @@
 Following my first project ie a [solar powered waterproof anemoter](https://github.com/fguiet/anemometer), let me introduce you : the solar powered waterproof windvane.
 Mostly based on the same form factor, I only had to re-designed the top part with Fusion 360.
 
+## 3D Models
+
+All 3D models can be found on my [Thingiverse for free](https://www.thingiverse.com/thing:4252764) or in the model3d folder of this project
+
+I included a mount system that fits on H pole like this one : 
+
+![Sweet](images/h_pole.jpg)
+
+If needed, I can provide the 3d model solar panel holder
+
 ## In real life
 
 * In place
