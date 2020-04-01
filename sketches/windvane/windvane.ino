@@ -8,7 +8,8 @@ Windvane
   Version            : 1.0
   History            : 1.0 - First version
                        1.1 - Replaced AMS117 LDO regulator to HT7333 LDO (1V dropout of AMS117 was too much when powered ESP32 via 5v pin with 3.7v lithium battery) 
-                             => the 3.3v pin displayed 2.8v ... when battery was 3.9v :( with HT7333 it's much better...but wareful it can deliver only 250mA max)                       
+                             => the 3.3v pin displayed 2.8v ... when battery was 3.9v :( with HT7333 it's much better...but wareful it can deliver only 250mA max) 
+                       1.2 - 2020.04.01 - Read voltage correction.                     
                        
 References :   
 
@@ -43,7 +44,7 @@ WiFiClient espClient;
 PubSubClient client(espClient);
 
 #define DEBUG 0
-#define FIRMWARE_VERSION "1.1"
+#define FIRMWARE_VERSION "1.2"
 
 int counter = 0;
 int samples = 9;
@@ -125,6 +126,13 @@ void InitSensors() {
 }
 
 void loop() {
+
+  /*ReadVoltage();
+
+  delay(200);
+
+  return;
+  */
   
   //Get Wind direction every get_direction_frequency ms
   if (millis() - last_millis >= get_direction_frequency ) { 
@@ -357,7 +365,7 @@ String getWindDirection(float voltage) {
 
 float ReadVoltage() {
 
-  //AnalogRead = 692 pour 3.9v
+  //AnalogRead = 720 pour 4.1v
 
   //R1 = 33kOhm
   //R2 = 7.5kOhm
@@ -369,7 +377,7 @@ float ReadVoltage() {
     
   debug_message("Analog Reading : " + String(sensorValue,2), true);
 
-  return (sensorValue * 3.9) / 692;
+  return (sensorValue * 4.1) / 720;
 
 }
 

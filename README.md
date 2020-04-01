@@ -29,7 +29,7 @@ Electronic spare parts needed :
 * 3.7v Lithium battery (650 mAh)
 * [Lithium battery charger module TP4056](https://www.aliexpress.com/item/32797834680.html?spm=a2g0o.productlist.0.0.217e1a3fGgFPtZ&algo_pvid=132d3b0e-1179-4677-b1ea-ac7e339a4b3a&algo_expid=132d3b0e-1179-4677-b1ea-ac7e339a4b3a-0&btsid=0b0a3f8115821175486423616e1e40&ws_ab_test=searchweb0_0,searchweb201602_,searchweb201603_)
 * [ESP32 DevKit)](https://www.aliexpress.com/item/32818515531.html?spm=a2g0o.productlist.0.0.50cab7b9EZ83s2&algo_pvid=df6b6e13-b443-470e-8411-4b14b9513104&algo_expid=df6b6e13-b443-470e-8411-4b14b9513104-0&btsid=0b0a0ae215856774603992321e9c56&ws_ab_test=searchweb0_0,searchweb201602_,searchweb201603_)
-* Home made voltage divider with 2 resistances 33KOhm and 7.5kOhm
+* Home made voltage divider with 2 resitors 33KOhm and 7.5kOhm
 * [Solar panel](https://www.aliexpress.com/item/32327321902.html?spm=a2g0s.9042311.0.0.27424c4dXw694V)
 * [XH2.54 connectors](https://www.aliexpress.com/item/32751262161.html?spm=a2g0o.productlist.0.0.73ad7920LACtrI&algo_pvid=59f4dba8-049b-412b-b6ab-2ad6a2a0b251&algo_expid=59f4dba8-049b-412b-b6ab-2ad6a2a0b251-1&btsid=0b0a01f815821181817176811e4e9d&ws_ab_test=searchweb0_0,searchweb201602_,searchweb201603_)
 * [30 AWG (0.08mm) silicon wire](https://www.aliexpress.com/item/1000006501735.html?spm=a2g0s.9042311.0.0.27424c4d4oyuHy)
@@ -43,7 +43,8 @@ Electronic spare parts needed :
 
 Quite easy : 
 
-* Wire positive and negative 3.7v battery to ESP32 DevKit (Careful connect to 5v pin, not 3.3v !!), Voltage divider, Hall Sensor, TP4056 
+* Wire positive and negative 3.7v battery to ESP32 DevKit (Careful connect to 5v pin, not 3.3v !!), Voltage divider (the one that will measure the battery voltage),  TP4056 
+* Wire the voltage divider that will measure the wind direction to 3.3v pin (that way we have a constant voltage)
 * GPIO34 to output of voltage divider (measure wind direction)
 * GPIO35 to ouput of voltage divider (measure battery voltage)
 
@@ -61,7 +62,11 @@ If needed, I can provide the 3d model solar panel holder
 
 * In place
 
-![Fusion 360](images/windvane_inplace.jpg)
+![In place](images/windvane_inplace.jpg)
+
+* Inside the beast (we can the custom voltage divider)
+
+![Inside the beast](images/inside_the_beast.jpg)
 
 * Fusion 360 design
 
@@ -69,6 +74,10 @@ If needed, I can provide the 3d model solar panel holder
 
 * Tampered ESP32 DevKit (I replaced the AMS1117 LDO 1v dropout by HT7333 only 250mA but low dropout)
 
-![Fusion 360](images/esp32_devkit_ht7333.jpg)
+![Tampered ESP32](images/esp32_devkit_ht7333.jpg)
+
+* Top view (we can see the bearing)
+
+![Top view](images/top_view.jpg)
 
 
