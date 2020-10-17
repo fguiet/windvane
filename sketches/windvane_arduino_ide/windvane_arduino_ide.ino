@@ -9,7 +9,8 @@ Windvane
   History            : 1.0 - First version
                        1.1 - Replaced AMS117 LDO regulator to HT7333 LDO (1V dropout of AMS117 was too much when powered ESP32 via 5v pin with 3.7v lithium battery) 
                              => the 3.3v pin displayed 2.8v ... when battery was 3.9v :( with HT7333 it's much better...but wareful it can deliver only 250mA max) 
-                       1.2 - 2020.04.01 - Read voltage correction.                     
+                       1.2 - 2020.04.01 - Read voltage correction. 
+                       1.3 - 2020.10.17 - Take "Unknown value into account...otherwise it could drain the battery when reedwitch are ko                    
                        
 References :   
 
@@ -144,7 +145,7 @@ void loop() {
     String windDirection = getWindDirection(voltage);
     debug_message("Wind direction : " + windDirection, true);  
     
-    if (windDirection != "Unknown" ) {
+    //if (windDirection != "Unknown" ) {
       counter++;
 
       if (winddir.containsKey(windDirection)) {
@@ -153,7 +154,7 @@ void loop() {
       else {
         winddir[windDirection]=1;
       }
-    }
+    //}
 
     last_millis = millis();
   }
