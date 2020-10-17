@@ -43,12 +43,12 @@ WiFiClient espClient;
 PubSubClient client(espClient);
 
 #define DEBUG 0
-#define FIRMWARE_VERSION "1.2"
+#define FIRMWARE_VERSION "1.4"
 
 int counter = 0;
 int samples = 9;
 unsigned long last_millis = 0;
-const int get_direction_frequency = 5000; //10s = 10000
+const int get_direction_frequency = 5000;  //10s = 10000
 char message_buff[200];
 
 String directions[] = { "South", "South-South-East", "South-East","East-South-East", "East","East-North-East", "North-East","North-North-East","North","North-North-West", "North-West","West-North-West","West","West-South-West","South-West","South-South-West" };
@@ -355,67 +355,67 @@ void SendResult() {
 
 String getWindDirection(float voltage) {
 
-  if (voltage >= 465 and voltage <= 520) {
+  if (voltage >= 565 and voltage <= 660) {
     return directions[0]; //South
   }
 
-  if (voltage >= 400 and voltage <= 460) {
+  if (voltage >= 500 and voltage <= 560) {
     return directions[1] ; //South-South-East    
   }
 
-  if (voltage >= 2240 and voltage <= 2310) {
+  if (voltage >= 2500 and voltage <= 2600) {
     return directions[2] ; //"South-East"    
   }
   
-  if (voltage >= 2050 and voltage <= 2110) {
+  /*if (voltage >= 2300 and voltage <= 2380) {
     return directions[3];  //"East-South-East";    
-  }
+  }*/
 
-  if (voltage >= 3390 and voltage <= 3480) {
+  if (voltage >= 2300 and voltage <= 2380) {
     return directions[4]; //"East";    
   }
 
-  if (voltage >= 3080 and voltage <= 3150) {
+  if (voltage >= 3650 and voltage <= 3750) {
     return directions[5]; //"East-North-East";    
   }
 
-  if (voltage >= 3800 and voltage <= 3880) {
+  if (voltage >= 3380 and voltage <= 3450) {
     return directions[6]; //"North-East";
   }
 
-  if (voltage >= 3520 and voltage <= 3600) {
+  if (voltage >= 3800 and voltage <= 3910) {
     return directions[7]; //"North-North-East";
   }
 
-  if (voltage >= 4000 and voltage <= 4096) {
+  if (voltage >= 4050 and voltage <= 4096) {
     return directions[8]; //"North";
   }
 
-  if (voltage >= 2690 and voltage <= 2750) {
+  if (voltage >= 2970 and voltage <= 3050) {
     return directions[9]; //"North-North-West";
   }
 
-  if (voltage >= 2770 and voltage <= 2850) {
+  if (voltage >= 3090 and voltage <= 3150) {
     return directions[10]; //"North-West";
   }
 
-  if (voltage >= 1900 and voltage <= 1980) {
+  if (voltage >= 2170 and voltage <= 2220) {
     return directions[11]; //"West-North-West";
   }
 
-  if (voltage >= 2300 and voltage <= 2400) {
+  if (voltage >= 2620 and voltage <= 2700) {
     return directions[12]; //"West";
   }
 
-  if (voltage >= 840 and voltage <= 900) {
+  if (voltage >= 980 and voltage <= 1050) {
     return directions[13]; //"West-South-West";
   }
 
-  if (voltage >= 1010 and voltage <= 1130) {
+  if (voltage >= 1180 and voltage <= 1250) {
     return directions[14]; //"South-West";
   }
   
-  if (voltage >= 280 and voltage <= 350) {
+  if (voltage >= 320 and voltage <= 420) {
     return directions[15]; //"South-South-West";
   }
 
