@@ -211,7 +211,7 @@ void setup() {
 
 float ReadVoltage() {
 
-  //AnalogRead = 850 pour 4.2v
+  //AnalogRead = 870 pour 4.2v
 
   //R1 = 33kOhm
   //R2 = 7.5kOhm
@@ -223,7 +223,7 @@ float ReadVoltage() {
     
   debug_message("Analog Reading : " + String(sensorValue,2), true);
 
-  return (sensorValue * 4.20) / 850;
+  return (sensorValue * 4.20) / 870;
 
 }
 
